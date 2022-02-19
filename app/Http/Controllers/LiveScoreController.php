@@ -108,7 +108,10 @@ class LiveScoreController extends Controller
 
     public function last_record()
     {
-        return $this->model->orderBy('id', 'desc')->first();
+        $last = $this->model->orderBy('id', 'desc')->first();
+        if($last)
+            return $last->updated_at;
+        return Carbon::parse('1400-11-30 12:00:00');
     }
 
     public function find_live_match_row($data)
