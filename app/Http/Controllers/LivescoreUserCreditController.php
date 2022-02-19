@@ -46,4 +46,9 @@ class LivescoreUserCreditController extends Controller
     {
         return Carbon::now()->addMonth((int)$credit / config('livescore')['credit_per_month']);
     }
+
+    public function credit_per_month()
+    {
+        return config('livescore')['credit_per_month'];
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LiveScoreController;
+use App\Http\Controllers\LivescoreUserCreditController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::any('/livescore', [LiveScoreController::class, 'get_livescore']);
 Route::any('/livescore/pay', [LiveScoreController::class, 'pay']);
 Route::any('/livescore/verify', [LiveScoreController::class, 'verify']);
+Route::any('/livescore/credit-per-month', [LivescoreUserCreditController::class, 'credit_per_month']);
