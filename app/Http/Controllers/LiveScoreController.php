@@ -192,7 +192,7 @@ class LiveScoreController extends Controller
                     $data['credit'] = $r->credit;
                     $data['authority'] = $result['data']["authority"];
                     $this->LSCreditCont->insert($data);
-                    return redirect('https://sandbox.zarinpal.com/pg/StartPay/' . $result['data']["authority"]);
+                    return redirect('https://www.zarinpal.com/pg/StartPay/' . $result['data']["authority"]);
                 }
             } else {
                 return 'Error Code: ' . $result['errors']['code'];
@@ -208,7 +208,7 @@ class LiveScoreController extends Controller
         $credit_record = $this->LSCreditCont->get_by_authority($Authority);
         $data = array("merchant_id" => config('zarinpal')['merchant_id'], "authority" => $Authority, "amount" => $credit_record->credit);
         $jsonData = json_encode($data);
-        $ch = curl_init('https://sandbox.zarinpal.com/pg/v4/payment/verify.json');
+        $ch = curl_init('https://api.zarinpal.com/pg/v4/payment/verify.json');
         curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v4');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
