@@ -74,7 +74,7 @@ class LiveScoreController extends Controller
     public function update_live_score($r)
     {
         // return $this->last_record()->updated_at->format('d M Y');
-        $allow = $this->allow_to_update($this->now, $this->last_record()->updated_at);
+        $allow = $this->allow_to_update($this->now, $this->last_record());
         if(!$allow){
             return null;
         }
@@ -111,7 +111,7 @@ class LiveScoreController extends Controller
         $last = $this->model->orderBy('id', 'desc')->first();
         if($last)
             return $last->updated_at;
-        return Carbon::parse('1400-11-30 12:00:00');
+        return null;
     }
 
     public function find_live_match_row($data)
@@ -154,6 +154,8 @@ class LiveScoreController extends Controller
 
     public function allow_to_update($now, $last_update)
     {
+        if(!$last_update)
+            return true;
         $last_update = Carbon::parse($last_update);
         $now = Carbon::parse($now);
         $diff = $last_update->diffInSeconds($now, false);
