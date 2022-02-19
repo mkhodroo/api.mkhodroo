@@ -24,3 +24,4 @@ Route::any('/livescore', [LiveScoreController::class, 'get_livescore']);
 Route::any('/livescore/pay', [LiveScoreController::class, 'pay']);
 Route::any('/livescore/verify', [LiveScoreController::class, 'verify']);
 Route::any('/livescore/credit-per-month', [LivescoreUserCreditController::class, 'credit_per_month']);
+Route::any('/livescore/expire-at', [LivescoreUserCreditController::class, 'expire_at']);
