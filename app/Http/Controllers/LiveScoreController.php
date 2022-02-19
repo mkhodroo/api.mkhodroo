@@ -159,6 +159,7 @@ class LiveScoreController extends Controller
 
     public function pay(Request $r)
     {
+        return var_dump($r);
         $data = array("merchant_id" => config('zarinpal')['merchant_id'],
             "amount" => $r->credit,
             "callback_url" => env('APP_URL') . "api/livescore/verify",
