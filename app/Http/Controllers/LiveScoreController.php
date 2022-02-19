@@ -27,7 +27,7 @@ class LiveScoreController extends Controller
 
     public function get_livescore(Request $r)
     {
-        $allow = $this->user_has_credit_to_get_livescore($this->LSUserCont->get_user_by_domain($r->getHttpHost()));
+        $allow = $this->user_has_credit_to_get_livescore($this->LSUserCont->get_user_by_domain($r->headers->get('referer')));
         if(!$allow)
             return [
                 'status' => 403,
@@ -159,7 +159,6 @@ class LiveScoreController extends Controller
 
     public function pay(Request $r)
     {
-        return var_dump($r->headers->get('referer'));
         $data = array("merchant_id" => config('zarinpal')['merchant_id'],
             "amount" => $r->credit,
             "callback_url" => env('APP_URL') . "api/livescore/verify",
@@ -189,7 +188,7 @@ class LiveScoreController extends Controller
         } else {
             if (empty($result['errors'])) {
                 if ($result['data']['code'] == 100) {
-                    $data['user_id'] = $this->LSUserCont->get_user_by_domain($r->getHttpHost())->id;
+                    $data['user_id'] = $this->LSUserCont->get_user_by_domain($r->headers->get('referer'))->id;
                     $data['credit'] = $r->credit;
                     $data['authority'] = $result['data']["authority"];
                     $this->LSCreditCont->insert($data);
