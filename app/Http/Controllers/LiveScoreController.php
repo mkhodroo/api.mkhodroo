@@ -78,6 +78,8 @@ class LiveScoreController extends Controller
         if(!$allow){
             return null;
         }
+        //delete all db records 
+        $this->model->get()->each(function($c){ $c->delete(); });
         $varzesh3_livescore_page = file_get_contents('https://www.varzesh3.com/livescore');
         // echo $varzesh3_livescore_page;
         $dom = new DOMDocument();
@@ -97,11 +99,8 @@ class LiveScoreController extends Controller
             $data['guest_goals'] = trim($e->childNodes[3]->childNodes[3]->childNodes[5]->nodeValue);
             $data['guest'] = trim($e->childNodes[3]->childNodes[5]->nodeValue);
             $data['date'] = date('Y-m-d H:i:s');
-            $id = $this->find_live_match_row($data);
-            if($id)
-                $this->update_livescore_row($id, $data);
-            else
-                $this->insert_livescore_row($data);  
+            
+            $this->insert_livescore_row($data);  
             // var_dump($data);
         } 
     }
